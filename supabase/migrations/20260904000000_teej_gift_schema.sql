@@ -27,7 +27,7 @@ create table if not exists public.gift_selections (
   constraint valid_spa_treatment check (
     (gift_name = 'Teej Gift Hamper' and spa_treatment is null)
     or
-    (gift_name = 'Tranquility Spa' and spa_treatment in (
+    (gift_name = 'Tranquility Spa' and spa_treatment is not null and spa_treatment in (
       'Bukuwa — 30 min',
       'Charan Abhyanga Massage — 30 min',
       'Head and Shoulder Massage — 30 min',
@@ -102,11 +102,13 @@ begin
     raise exception 'A spa treatment cannot be selected with the gift hamper.' using errcode = 'P0001';
   end if;
 
-  if p_gift_name = 'Tranquility Spa' and p_spa_treatment not in (
-    'Bukuwa — 30 min',
-    'Charan Abhyanga Massage — 30 min',
-    'Head and Shoulder Massage — 30 min',
-    'Face Deep Cleansing — 40 min'
+  if p_gift_name = 'Tranquility Spa' and (
+    p_spa_treatment is null or p_spa_treatment not in (
+      'Bukuwa — 30 min',
+      'Charan Abhyanga Massage — 30 min',
+      'Head and Shoulder Massage — 30 min',
+      'Face Deep Cleansing — 40 min'
+    )
   ) then
     raise exception 'Please select one valid spa treatment.' using errcode = 'P0001';
   end if;
