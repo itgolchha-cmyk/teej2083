@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#32101d">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Admin · Teej 2083 Gift Selection</title>
+  <link rel="stylesheet" href="/src/styles.css">
+</head>
+<body class="admin-page">
+  <header class="admin-bar">
+    <a class="brand" href="/"><span>तीज २०८३</span><strong>Gift Administration</strong></a>
+    <button class="button button--ghost" id="signOutButton" type="button" hidden>Sign out</button>
+  </header>
+
+  <main class="admin-shell">
+    <section class="surface login-card" id="loginPanel">
+      <p class="eyebrow eyebrow--dark">Secure administration</p>
+      <h1>Admin sign in</h1>
+      <p>Use the administrator account created in Supabase.</p>
+      <form id="loginForm">
+        <div class="field">
+          <label for="email">Email address</label>
+          <input id="email" type="email" autocomplete="username" required>
+        </div>
+        <div class="field">
+          <label for="password">Password</label>
+          <input id="password" type="password" autocomplete="current-password" minlength="8" required>
+        </div>
+        <div class="alert alert--error" id="loginError" role="alert" hidden></div>
+        <button class="button button--primary button--full" id="loginButton" type="submit">
+          <span class="button-label">Sign in</span><span class="spinner" aria-hidden="true"></span>
+        </button>
+      </form>
+    </section>
+
+    <section class="dashboard" id="dashboard" hidden>
+      <div class="dashboard-head">
+        <div><p class="eyebrow eyebrow--dark">Live responses</p><h1>Teej gift selections</h1><p id="lastUpdated">Loading submissions…</p></div>
+        <button class="button button--excel" id="exportButton" type="button" disabled>Download Excel</button>
+      </div>
+
+      <div class="stat-grid" id="stats">
+        <article class="stat"><span>Total submitted</span><strong id="totalCount">0</strong></article>
+        <article class="stat"><span>Gift hamper</span><strong id="hamperCount">0</strong></article>
+        <article class="stat"><span>Tranquility Spa</span><strong id="spaCount">0</strong></article>
+        <article class="stat"><span>Awaiting response</span><strong id="pendingCount">0</strong></article>
+      </div>
+
+      <section class="surface table-card">
+        <div class="table-tools">
+          <label class="search-field"><span class="sr-only">Search submissions</span><input id="searchInput" type="search" placeholder="Search employee, unit, branch…"></label>
+          <label><span class="sr-only">Filter by gift</span><select id="giftFilter"><option value="">All gifts</option><option>Teej Gift Hamper</option><option>Tranquility Spa</option></select></label>
+          <button class="button button--secondary" id="refreshButton" type="button">Refresh</button>
+        </div>
+        <div class="alert alert--error" id="dataError" role="alert" hidden></div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Employee</th><th>Designation</th><th>Unit</th><th>Branch</th><th>Department</th><th>Gift</th><th>Spa treatment</th><th>Submitted</th></tr></thead>
+            <tbody id="submissionRows"></tbody>
+          </table>
+          <div class="empty-state" id="emptyState" hidden>No matching submissions found.</div>
+        </div>
+        <div class="table-footer"><span id="rowCount">0 responses</span><span>All times shown in Nepal time</span></div>
+      </section>
+    </section>
+  </main>
+  <script type="module" src="/src/admin.js"></script>
+</body>
+</html>

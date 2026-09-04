@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#7f1734">
+  <meta name="description" content="Teej 2083 staff gift selection form">
+  <title>Teej 2083 Gift Selection</title>
+  <link rel="stylesheet" href="/src/styles.css">
+</head>
+<body class="public-page">
+  <header class="hero">
+    <div class="hero__petal hero__petal--one"></div>
+    <div class="hero__petal hero__petal--two"></div>
+    <div class="eyebrow">तीज २०८३</div>
+    <h1>Choose Your Teej Gift</h1>
+    <p>Select your name, verify your office details, and choose one gift prepared especially for you.</p>
+  </header>
+
+  <main class="page-shell">
+    <div class="system-banner" id="configError" hidden>
+      <strong>Setup required</strong>
+      <span>The form is not connected to Supabase yet. Please contact the administrator.</span>
+    </div>
+
+    <form class="surface form-card" id="giftForm" novalidate>
+      <section class="form-section">
+        <div class="section-title">
+          <span class="step">1</span>
+          <div><h2>Your details</h2><p>Choose your name to fill the remaining fields.</p></div>
+        </div>
+
+        <div class="form-grid">
+          <div class="field field--wide">
+            <label for="employee">Employee Name <span aria-hidden="true">*</span></label>
+            <select id="employee" required disabled>
+              <option value="">Loading employee list…</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="designation">Designation</label>
+            <input id="designation" type="text" readonly placeholder="—">
+          </div>
+          <div class="field">
+            <label for="unit">Unit</label>
+            <input id="unit" type="text" readonly placeholder="—">
+          </div>
+          <div class="field">
+            <label for="branch">Branch</label>
+            <input id="branch" type="text" readonly placeholder="—">
+          </div>
+          <div class="field">
+            <label for="department">Department</label>
+            <input id="department" type="text" readonly placeholder="—">
+          </div>
+        </div>
+      </section>
+
+      <section class="form-section form-section--divided">
+        <div class="section-title">
+          <span class="step">2</span>
+          <div><h2>Select one gift</h2><p>Your selection is final after submission.</p></div>
+        </div>
+
+        <fieldset class="gift-fieldset">
+          <legend class="sr-only">Teej Gift Name</legend>
+          <div class="gift-grid">
+            <label class="gift-card">
+              <input type="radio" name="gift" value="Teej Gift Hamper" required>
+              <span class="gift-check" aria-hidden="true">✓</span>
+              <span class="gift-visual gift-visual--hamper">
+                <img src="/assets/teej-gift.jpeg" alt="Teej gift hamper with personal-care items and pouch">
+              </span>
+              <span class="gift-copy">
+                <strong>Teej Gift Hamper</strong>
+                <span>A festive personal-care gift set with all items shown.</span>
+              </span>
+            </label>
+
+            <label class="gift-card">
+              <input type="radio" name="gift" value="Tranquility Spa">
+              <span class="gift-check" aria-hidden="true">✓</span>
+              <span class="gift-visual">
+                <img src="/assets/tranquility-spa.jpeg" alt="Tranquility Spa treatment menu">
+              </span>
+              <span class="gift-copy">
+                <strong>Tranquility Spa</strong>
+                <span>Choose one relaxing treatment from four options.</span>
+              </span>
+            </label>
+          </div>
+        </fieldset>
+
+        <fieldset class="spa-panel" id="spaPanel" hidden>
+          <legend>Choose one spa treatment</legend>
+          <p>Only one treatment can be selected.</p>
+          <div class="spa-grid">
+            <label class="spa-choice"><input type="radio" name="spaTreatment" value="Bukuwa — 30 min"><span><strong>Bukuwa</strong><small>30 minutes</small></span></label>
+            <label class="spa-choice"><input type="radio" name="spaTreatment" value="Charan Abhyanga Massage — 30 min"><span><strong>Charan Abhyanga Massage</strong><small>30 minutes</small></span></label>
+            <label class="spa-choice"><input type="radio" name="spaTreatment" value="Head and Shoulder Massage — 30 min"><span><strong>Head and Shoulder Massage</strong><small>30 minutes</small></span></label>
+            <label class="spa-choice"><input type="radio" name="spaTreatment" value="Face Deep Cleansing — 40 min"><span><strong>Face Deep Cleansing</strong><small>40 minutes</small></span></label>
+          </div>
+        </fieldset>
+
+        <div class="alert alert--error" id="formError" role="alert" hidden></div>
+        <button class="button button--primary button--full" id="submitButton" type="submit" disabled>
+          <span class="button-label">Confirm My Selection</span>
+          <span class="spinner" aria-hidden="true"></span>
+        </button>
+      </section>
+    </form>
+
+    <section class="surface confirmation" id="confirmation" hidden aria-live="polite">
+      <div class="confirmation__head">
+        <span class="success-mark" aria-hidden="true">✓</span>
+        <p class="eyebrow eyebrow--small">Happy Teej 2083</p>
+        <h2>Selection submitted</h2>
+        <p>Your response has been saved successfully.</p>
+      </div>
+      <div class="confirmation__body">
+        <dl class="summary-grid" id="summary"></dl>
+        <div class="reference">Reference: <strong id="referenceId"></strong></div>
+        <p class="fine-print">You may screenshot or print this confirmation for your records.</p>
+        <button class="button button--secondary" type="button" id="printButton">Print / Save as PDF</button>
+      </div>
+    </section>
+
+    <p class="admin-link"><a href="/admin.html">Administrator sign in</a></p>
+  </main>
+  <script type="module" src="/src/form.js"></script>
+</body>
+</html>

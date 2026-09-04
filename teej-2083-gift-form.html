@@ -1,0 +1,572 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#7f1734">
+  <title>Teej 2083 Gift Selection Form</title>
+  <style>
+    :root {
+      --maroon: #7f1734;
+      --maroon-dark: #561023;
+      --rose: #fff0f4;
+      --gold: #c79b45;
+      --cream: #fffaf1;
+      --paper: #ffffff;
+      --ink: #292023;
+      --muted: #6f6266;
+      --line: #ead9dd;
+      --success: #17613f;
+      --shadow: 0 16px 42px rgba(72, 19, 38, .11);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 12% 8%, rgba(199,155,69,.16), transparent 24rem),
+        linear-gradient(180deg, #7f1734 0 290px, var(--cream) 290px 100%);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      min-height: 100vh;
+    }
+
+    button, input, select { font: inherit; }
+    button, select, label { -webkit-tap-highlight-color: transparent; }
+
+    .hero {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 44px 22px 70px;
+      color: white;
+      text-align: center;
+    }
+    .hero .eyebrow {
+      color: #f1d997;
+      font-family: Georgia, serif;
+      font-size: 18px;
+      letter-spacing: .14em;
+      margin-bottom: 10px;
+    }
+    .hero h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(34px, 7vw, 56px);
+      line-height: 1.05;
+      margin: 0;
+      font-weight: 600;
+    }
+    .hero p {
+      color: #f8e8ed;
+      line-height: 1.65;
+      margin: 15px auto 0;
+      max-width: 650px;
+    }
+
+    main {
+      width: min(940px, calc(100% - 28px));
+      margin: -42px auto 64px;
+    }
+    .card {
+      background: var(--paper);
+      border: 1px solid rgba(127,23,52,.1);
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .form-section { padding: clamp(22px, 5vw, 42px); }
+    .section-heading {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+    .step {
+      display: grid;
+      place-items: center;
+      flex: 0 0 34px;
+      height: 34px;
+      border-radius: 50%;
+      color: white;
+      background: var(--maroon);
+      font-weight: 750;
+    }
+    h2 {
+      color: var(--maroon-dark);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 24px;
+      margin: 0;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+    .field { min-width: 0; }
+    .field.full { grid-column: 1 / -1; }
+    .field label, .group-label {
+      display: block;
+      color: #4c343b;
+      font-size: 14px;
+      font-weight: 720;
+      margin: 0 0 7px;
+    }
+    .required { color: var(--maroon); }
+    input[type="text"], select {
+      width: 100%;
+      min-height: 48px;
+      color: var(--ink);
+      background: white;
+      border: 1px solid #d8c7cb;
+      border-radius: 10px;
+      padding: 11px 13px;
+      transition: border .15s, box-shadow .15s;
+    }
+    input[type="text"]:focus, select:focus {
+      outline: 0;
+      border-color: var(--maroon);
+      box-shadow: 0 0 0 4px rgba(127,23,52,.1);
+    }
+    select:disabled {
+      color: #554a4d;
+      background: #f7f3f4;
+      opacity: 1;
+      cursor: not-allowed;
+    }
+    .hint {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+      margin-top: 6px;
+    }
+    .divider { border-top: 1px solid var(--line); }
+
+    .gift-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+    .gift-card {
+      display: block;
+      position: relative;
+      overflow: hidden;
+      border: 2px solid var(--line);
+      border-radius: 16px;
+      cursor: pointer;
+      background: white;
+      transition: transform .15s, border-color .15s, box-shadow .15s;
+    }
+    .gift-card:hover { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(72,19,38,.1); }
+    .gift-card:has(input:focus-visible) { outline: 4px solid rgba(127,23,52,.18); }
+    .gift-card:has(input:checked) {
+      border-color: var(--maroon);
+      box-shadow: 0 0 0 3px rgba(127,23,52,.09);
+    }
+    .gift-card input {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      width: 21px;
+      height: 21px;
+      accent-color: var(--maroon);
+      z-index: 2;
+    }
+    .gift-visual {
+      display: block;
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      overflow: hidden;
+      background: #eee5e7;
+    }
+    .gift-photo {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .gift-photo.teej {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 56.25%;
+      height: 177.78%;
+      transform: translate(-50%, -50%) rotate(-90deg);
+      object-position: 50% 54%;
+    }
+    .gift-photo.spa { object-position: 50% 25%; }
+    .gift-copy { padding: 17px 18px 19px; }
+    .gift-copy strong {
+      display: block;
+      color: var(--maroon-dark);
+      font-family: Georgia, serif;
+      font-size: 20px;
+      margin-bottom: 5px;
+    }
+    .gift-copy span { color: var(--muted); font-size: 13px; line-height: 1.5; }
+
+    #spaChoices {
+      display: none;
+      margin-top: 22px;
+      padding: 20px;
+      border: 1px solid #ead0d8;
+      border-radius: 14px;
+      background: var(--rose);
+    }
+    #spaChoices.active { display: block; animation: appear .18s ease-out; }
+    @keyframes appear { from { opacity: 0; transform: translateY(-5px); } }
+    .spa-title { color: var(--maroon-dark); font-weight: 800; margin: 0 0 4px; }
+    .spa-instruction { color: var(--muted); font-size: 13px; margin: 0 0 14px; }
+    .spa-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+    .spa-option {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      min-height: 62px;
+      padding: 11px 13px;
+      border: 1px solid #dfc8ce;
+      border-radius: 10px;
+      background: white;
+      cursor: pointer;
+    }
+    .spa-option:has(input:checked) { border-color: var(--maroon); box-shadow: inset 4px 0 var(--maroon); }
+    .spa-option input { flex: 0 0 auto; width: 18px; height: 18px; accent-color: var(--maroon); }
+    .spa-option strong { display: block; color: #4d2934; font-size: 14px; }
+    .spa-option small { color: var(--muted); }
+
+    .error {
+      display: none;
+      color: #8d1f2f;
+      background: #fff0f2;
+      border: 1px solid #edc7cd;
+      border-radius: 9px;
+      padding: 10px 12px;
+      margin-top: 16px;
+      font-size: 13px;
+    }
+    .error.active { display: block; }
+    .actions { display: flex; gap: 12px; margin-top: 24px; }
+    button {
+      min-height: 50px;
+      border: 0;
+      border-radius: 10px;
+      padding: 12px 22px;
+      cursor: pointer;
+      font-weight: 780;
+    }
+    .primary { flex: 1; color: white; background: var(--maroon); }
+    .primary:hover { background: var(--maroon-dark); }
+    .secondary { color: var(--maroon); background: var(--rose); border: 1px solid #e7cbd3; }
+
+    .confirmation { display: none; }
+    .confirmation.active { display: block; }
+    .confirmation-header {
+      color: white;
+      background: linear-gradient(135deg, var(--maroon), #a52a50);
+      padding: 28px clamp(22px, 5vw, 42px);
+    }
+    .confirmation-header .check {
+      display: inline-grid;
+      place-items: center;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      color: var(--success);
+      background: white;
+      font-weight: 900;
+      margin-bottom: 10px;
+    }
+    .confirmation-header h2 { color: white; font-size: 29px; }
+    .confirmation-header p { color: #f8e7ed; margin: 7px 0 0; }
+    .confirmation-body { padding: clamp(22px, 5vw, 42px); }
+    .summary-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+    .summary-item { background: white; padding: 15px 17px; }
+    .summary-item dt { color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: .06em; }
+    .summary-item dd { color: var(--ink); font-weight: 720; margin: 4px 0 0; }
+    .summary-item.full { grid-column: 1 / -1; }
+    .summary-gift { color: var(--maroon) !important; font-family: Georgia, serif; font-size: 19px; }
+    .confirmation-note { color: var(--muted); font-size: 13px; line-height: 1.6; margin: 16px 0 0; }
+
+    footer { color: #837378; text-align: center; font-size: 12px; margin-top: 18px; }
+    [hidden] { display: none !important; }
+
+    @media (max-width: 680px) {
+      body { background: linear-gradient(180deg, #7f1734 0 240px, var(--cream) 240px 100%); }
+      .hero { padding-top: 34px; }
+      main { width: min(100% - 18px, 940px); }
+      .grid, .gift-grid, .spa-list, .summary-grid { grid-template-columns: 1fr; }
+      .summary-item.full { grid-column: auto; }
+      .actions { flex-direction: column; }
+      .secondary { order: 2; }
+    }
+
+    @media print {
+      body { background: white; }
+      .hero, #giftForm, footer, .actions { display: none !important; }
+      main { width: 100%; margin: 0; }
+      .card { border: 0; box-shadow: none; }
+      .confirmation { display: block !important; }
+      .confirmation-header { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+    }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="eyebrow">तीज २०८३</div>
+    <h1>Gift Selection Form</h1>
+    <p>Select your name, verify your office details, and choose one preferred Teej gift.</p>
+  </header>
+
+  <main>
+    <form class="card" id="giftForm" novalidate>
+      <section class="form-section">
+        <div class="section-heading"><span class="step">1</span><h2>Employee details</h2></div>
+        <div class="grid">
+          <div class="field full">
+            <label for="employee">Employee Name <span class="required">*</span></label>
+            <select id="employee" required>
+              <option value="">Select your name</option>
+            </select>
+            <div class="hint">Your office details will fill automatically. Choose “My name is not listed” if needed.</div>
+          </div>
+          <div class="field full" id="manualNameField" hidden>
+            <label for="manualName">Enter Employee Name <span class="required">*</span></label>
+            <input type="text" id="manualName" autocomplete="name" placeholder="Full name">
+          </div>
+          <div class="field">
+            <label for="designation">Designation <span class="required">*</span></label>
+            <select id="designation" required><option value="">Select designation</option></select>
+          </div>
+          <div class="field">
+            <label for="unit">Unit <span class="required">*</span></label>
+            <select id="unit" required><option value="">Select unit</option></select>
+          </div>
+          <div class="field">
+            <label for="branch">Branch <span class="required">*</span></label>
+            <select id="branch" required><option value="">Select branch</option></select>
+          </div>
+          <div class="field">
+            <label for="department">Department <span class="required">*</span></label>
+            <select id="department" required><option value="">Select department</option></select>
+          </div>
+        </div>
+      </section>
+
+      <section class="form-section divider">
+        <div class="section-heading"><span class="step">2</span><h2>Choose your gift</h2></div>
+        <p class="group-label" id="giftLegend">Teej Gift Name <span class="required">*</span></p>
+        <div class="gift-grid" role="radiogroup" aria-labelledby="giftLegend">
+          <label class="gift-card">
+            <input type="radio" name="gift" value="Teej Gift Hamper" required>
+            <span class="gift-visual"><img class="gift-photo teej" src="assets/teej-gift.jpeg" alt="Teej gift hamper with personal-care items and pouch"></span>
+            <span class="gift-copy"><strong>Teej Gift Hamper</strong><span>A festive personal-care gift set with the items shown above.</span></span>
+          </label>
+          <label class="gift-card">
+            <input type="radio" name="gift" value="Tranquility Spa">
+            <span class="gift-visual"><img class="gift-photo spa" src="assets/tranquility-spa.jpeg" alt="Tranquility Spa treatment menu"></span>
+            <span class="gift-copy"><strong>Tranquility Spa</strong><span>Select one treatment from the four available options.</span></span>
+          </label>
+        </div>
+
+        <div id="spaChoices" aria-live="polite">
+          <p class="spa-title">Choose one Tranquility Spa treatment</p>
+          <p class="spa-instruction">Only one option can be selected.</p>
+          <div class="spa-list">
+            <label class="spa-option"><input type="radio" name="spaTreatment" value="Bukuwa — 30 min"><span><strong>Bukuwa</strong><small>30 minutes</small></span></label>
+            <label class="spa-option"><input type="radio" name="spaTreatment" value="Charan Abhyanga Massage — 30 min"><span><strong>Charan Abhyanga Massage</strong><small>30 minutes</small></span></label>
+            <label class="spa-option"><input type="radio" name="spaTreatment" value="Head and Shoulder Massage — 30 min"><span><strong>Head and Shoulder Massage</strong><small>30 minutes</small></span></label>
+            <label class="spa-option"><input type="radio" name="spaTreatment" value="Face Deep Cleansing — 40 min"><span><strong>Face Deep Cleansing</strong><small>40 minutes</small></span></label>
+          </div>
+        </div>
+
+        <div class="error" id="formError" role="alert"></div>
+        <div class="actions"><button class="primary" type="submit">Confirm My Selection</button></div>
+      </section>
+    </form>
+
+    <section class="card confirmation" id="confirmation" aria-live="polite">
+      <div class="confirmation-header">
+        <span class="check" aria-hidden="true">✓</span>
+        <h2>Selection confirmed</h2>
+        <p>Please screenshot, print, or save this confirmation.</p>
+      </div>
+      <div class="confirmation-body">
+        <dl class="summary-grid" id="summary"></dl>
+        <p class="confirmation-note">This page works offline and does not send information to a server. Share this confirmation using your office’s requested process.</p>
+        <div class="actions">
+          <button class="secondary" type="button" id="editButton">Edit selection</button>
+          <button class="primary" type="button" id="printButton">Print / Save as PDF</button>
+        </div>
+      </div>
+    </section>
+    <footer>Happy Teej 2083</footer>
+  </main>
+
+  <script>
+    const employees = [
+      ["Anju Singh","Junior Officer","Bajaj Bikes","Bajaj Showroom","Sales"],
+      ["Kabita Podel","Office Assistant","Bajaj Bikes","Bajaj Showroom","Sales"],
+      ["Sujata Adhikari","Senior Officer-Sales","Bajaj Bikes","Bajaj Showroom","Sales"],
+      ["Goma Gajurel","Store Assistant","Chetak EV","Chetak Service","Spares"],
+      ["Shristi Maharjan","Senior Officer-Customer Care","Chetak EV","Chetak Service","Service"],
+      ["Ambika Deula","Office Assistant","Chetak EV","Chetak Showroom","Sales"],
+      ["Anisha Maharjan","Senior Officer-Sales","Chetak EV","Chetak Showroom","Sales"],
+      ["Anita Karki","Officer-Accounts","Chetak EV","Chetak Showroom","Account & Finance"],
+      ["Sumitra Dhakal","Officer-Sales","Chetak EV","Chetak Showroom","Sales"],
+      ["Subita Mushyan","Deputy Manager","Bajaj Bikes","Corporate Office","Account & Finance"],
+      ["Richa Amatya","Assistant Manager","Bajaj Bikes","Corporate Office","Account & Finance"],
+      ["Sudha Acharya","Cashier","Bajaj Bikes","Corporate Office","Account & Finance"],
+      ["Karuna Khatri","Junior Assistant Manager","Bajaj Bikes","Corporate Office","Logistics"],
+      ["Siwani Puri","Executive Secretary","Bajaj Bikes","Corporate Office","Admin"],
+      ["Anjana Maharjan","Junior Assistant Manager","Servo","Corporate Office","Account & Finance"],
+      ["Rukshana Maharjan","Junior Assistant Manager","Servo","Corporate Office","Marketing"],
+      ["Alina KC","Officer","Servo","Corporate Office","Sales"],
+      ["Relena Maharjan","Incharge-Customer Care","Bajaj Bikes","Corporate Office","Service"],
+      ["Namita Koirala","Senior Officer","Bajaj Bikes","Corporate Office","Account & Finance"],
+      ["Ranjeeta Phuyal","Senior Officer","Bajaj Bikes","Corporate Office","HR"],
+      ["Monika Ghimire","Senior Front Desk Officer","Bajaj Bikes","Corporate Office","Admin"],
+      ["Shreeti Maharjan","Senior Officer","Bajaj Bikes","Corporate Office","Sales"],
+      ["Shreya Giri","Director","Bajaj Bikes","Corporate Office","Management"],
+      ["Rashmi Pandey","Manager","Bajaj Bikes","Corporate Office","Service"],
+      ["Simran Lama","Customer Service Representative","Bajaj Bikes","Corporate Office","Service"],
+      ["Nishma Ruwale Magar","Customer Service Representative","Bajaj Bikes","Corporate Office","Service"],
+      ["Rupa Bista","Office Assistant","Bajaj Bikes","Corporate Office","Admin"],
+      ["Shophiya Dongol Deula","Front Desk Officer","Bajaj Bikes","Corporate Office","Admin"],
+      ["Ritu Chauhan","Head Of HR","Bajaj Bikes","Corporate Office","HR"],
+      ["Nisha Bhattarai","Officer-Accounts","Bajaj Bikes","Corporate Office","Account & Finance"],
+      ["Pupsa Bogati","Customer Service Representative","Bajaj Bikes","Corporate Office","Service"],
+      ["Chanda Rokamagar","Office Assistant","Bajaj Bikes","Corporate Office","Admin"],
+      ["Asha Kafle","Customer Service Representative","Bajaj Bikes","Corporate Office","Service"],
+      ["Manju Khatiwada","Assistant Manager","KTM Bikes","KTM Service-Sanogaucharan","Spares"],
+      ["Neha Adhikari","Senior Officer-Customer Care","KTM Bikes","KTM Service-Sanogaucharan","Service"],
+      ["Rita Dhimal","Office Assistant","KTM Bikes","KTM Service-Sanogaucharan","Service"],
+      ["Bandana Lamichhane Khatri","Senior Officer","KTM Bikes","KTM Service-Sanogaucharan","Service"],
+      ["Jharana Shrestha","Receptionist","KTM Bikes","KTM Service-Sanogaucharan","Service"],
+      ["Sujata Khadka","Officer-Customer Care","KTM Bikes","KTM Service-Sanogaucharan","Service"],
+      ["Reena Maharjan","Senior Assistant","KTM Bikes","KTM Showroom-Naxal","Service"],
+      ["Phulmaya Gurung","Office Assistant","Bajaj Bikes","Kuleshwor","Sales"],
+      ["Sulochana Bhattarai","Senior Officer-Logistics","Bajaj Bikes","Kuleshwor","Spares"],
+      ["Binita Khiju","Customer Care Officer","Triumph Bikes","Triumph Service","Spares"],
+      ["Sarana Maharjan","Sr. Officer-Accounts & Finance","Triumph Bikes","Triumph Showroom","Service"],
+      ["Garima Limbu","Receptionist","Triumph Bikes","Triumph Showroom","Account & Finance"],
+      ["Arju Dhital","Accounts Assistant","Triumph Bikes","Triumph Showroom","Sales"],
+      ["Mathura Bhandari","Cleaner","Sitapaila","Sitapaila","Account & Finance"],
+      ["Shodha Bagale Thapa","House Keeper","Sitapaila","Sitapaila","Sitapaila"],
+      ["Nita Khadka","Gardener","Sitapaila","Sitapaila","Sitapaila"],
+      ["Nirmala Thapa","Gardener","Sitapaila","Sitapaila","Sitapaila"],
+      ["Sita Khadka","Gardener","Sitapaila","Sitapaila","Sitapaila"],
+      ["Sahili Tiwari","Helper","Sitapaila","Sitapaila","Sitapaila"],
+      ["Bami Maya Magar","House Keeper","Sitapaila","Sitapaila","Sitapaila"],
+      ["Pramila Subedi","Cleaner","Sitapaila","Sitapaila","Sitapaila"],
+      ["Tulki Kandel","Officer","Bajaj Bikes","Narayanghat","Spares"],
+      ["Sadiksha Bhattarai","Officer-Sales","Bajaj Bikes","Narayanghat","Spares"],
+      ["Sarita Chaudhary","Office Assistant","Triumph Bikes","Narayanghat","Sales"],
+      ["Parbati Sen","Office Assistant","Bajaj Bikes","Bhumahi Branch","Spares"],
+      ["Muskan Gyawali","Office Assistant","Bajaj Bikes","Bhumahi Branch","Spares"],
+      ["Sabitri Dhakal","Office Assistant","Bajaj Bikes","Bhumahi Branch","Logistics"],
+      ["Aasha Bhandari","CRM","Daily Wages & Intern","Corporate Office","Not specified"],
+      ["Merina Bhandari","CRM","Daily Wages & Intern","Corporate Office","Not specified"],
+      ["Manila Rai","Sweeper","Daily Wages & Intern","Itahari","Not specified"],
+      ["Bina Dangi","Registration Assistant","Daily Wages & Intern","Not specified","Not specified"],
+      ["Divya Shrestha","Registration Assistant","Daily Wages & Intern","Not specified","Not specified"],
+      ["Prinja Dhungana","Intern","Daily Wages & Intern","Naxal","Not specified"],
+      ["Sandhya Kafle","Intern","Daily Wages & Intern","Naxal","Not specified"],
+      ["Manju Devi Chaudhary Ray","Office Helper","Daily Wages & Intern","Bhumahi Spare","Not specified"]
+    ];
+
+    const employeeSelect = document.getElementById("employee");
+    const manualNameField = document.getElementById("manualNameField");
+    const manualName = document.getElementById("manualName");
+    const detailIds = ["designation", "unit", "branch", "department"];
+    const detailSelects = detailIds.map(id => document.getElementById(id));
+    const form = document.getElementById("giftForm");
+    const spaChoices = document.getElementById("spaChoices");
+    const spaRadios = [...document.querySelectorAll('input[name="spaTreatment"]')];
+    const errorBox = document.getElementById("formError");
+    const confirmation = document.getElementById("confirmation");
+
+    employees.forEach((person, index) => employeeSelect.add(new Option(person[0], String(index))));
+    employeeSelect.add(new Option("My name is not listed", "manual"));
+
+    detailSelects.forEach((select, detailIndex) => {
+      [...new Set(employees.map(person => person[detailIndex + 1]))]
+        .sort((a, b) => a.localeCompare(b))
+        .forEach(value => select.add(new Option(value, value)));
+      select.add(new Option("Other / Not listed", "Other / Not listed"));
+    });
+
+    function setDetails(person) {
+      detailSelects.forEach((select, index) => { select.value = person ? person[index + 1] : ""; });
+    }
+
+    employeeSelect.addEventListener("change", () => {
+      const isManual = employeeSelect.value === "manual";
+      manualNameField.hidden = !isManual;
+      manualName.required = isManual;
+      if (!isManual) manualName.value = "";
+      setDetails(isManual || employeeSelect.value === "" ? null : employees[Number(employeeSelect.value)]);
+      errorBox.classList.remove("active");
+    });
+
+    document.querySelectorAll('input[name="gift"]').forEach(radio => {
+      radio.addEventListener("change", () => {
+        const isSpa = radio.checked && radio.value === "Tranquility Spa";
+        spaChoices.classList.toggle("active", isSpa);
+        spaRadios.forEach(item => { item.required = isSpa; if (!isSpa) item.checked = false; });
+        errorBox.classList.remove("active");
+      });
+    });
+
+    function addSummaryItem(list, label, value, full = false, gift = false) {
+      const wrapper = document.createElement("div");
+      wrapper.className = "summary-item" + (full ? " full" : "");
+      const dt = document.createElement("dt");
+      const dd = document.createElement("dd");
+      dt.textContent = label;
+      dd.textContent = value;
+      if (gift) dd.className = "summary-gift";
+      wrapper.append(dt, dd);
+      list.append(wrapper);
+    }
+
+    form.addEventListener("submit", event => {
+      event.preventDefault();
+      const gift = document.querySelector('input[name="gift"]:checked');
+      const spa = document.querySelector('input[name="spaTreatment"]:checked');
+      const name = employeeSelect.value === "manual" ? manualName.value.trim() :
+        (employeeSelect.value === "" ? "" : employees[Number(employeeSelect.value)][0]);
+
+      if (!form.checkValidity() || !name || !gift || (gift.value === "Tranquility Spa" && !spa)) {
+        errorBox.textContent = gift && gift.value === "Tranquility Spa" && !spa
+          ? "Please select one Tranquility Spa treatment."
+          : "Please complete all required fields before confirming.";
+        errorBox.classList.add("active");
+        form.reportValidity();
+        return;
+      }
+
+      errorBox.classList.remove("active");
+      const summary = document.getElementById("summary");
+      summary.replaceChildren();
+      addSummaryItem(summary, "Employee Name", name);
+      addSummaryItem(summary, "Designation", document.getElementById("designation").value);
+      addSummaryItem(summary, "Unit", document.getElementById("unit").value);
+      addSummaryItem(summary, "Branch", document.getElementById("branch").value);
+      addSummaryItem(summary, "Department", document.getElementById("department").value);
+      addSummaryItem(summary, "Selected Gift", gift.value, true, true);
+      if (spa) addSummaryItem(summary, "Selected Treatment", spa.value, true);
+
+      form.hidden = true;
+      confirmation.classList.add("active");
+      window.scrollTo({ top: Math.max(0, confirmation.offsetTop - 18), behavior: "smooth" });
+    });
+
+    document.getElementById("editButton").addEventListener("click", () => {
+      confirmation.classList.remove("active");
+      form.hidden = false;
+      window.scrollTo({ top: Math.max(0, form.offsetTop - 18), behavior: "smooth" });
+    });
+    document.getElementById("printButton").addEventListener("click", () => window.print());
+  </script>
+</body>
+</html>
