@@ -3,7 +3,8 @@
 A production-ready employee gift selection app with:
 
 - a responsive public selection form;
-- employee details loaded from the supplied 68-person roster;
+- manual employee-name entry with roster autocomplete and automatic detail matching;
+- secure duplicate-name and duplicate-submission protection;
 - exclusive selection between the Teej Gift Hamper and Tranquility Spa;
 - one-of-four spa treatment selection;
 - Supabase persistence with Row Level Security;
@@ -38,7 +39,7 @@ The public form is at `/`; the administrator dashboard is at `/admin.html`.
 ## Supabase setup
 
 1. Create a Supabase project.
-2. Open the SQL Editor and run `supabase/migrations/20260904000000_teej_gift_schema.sql`.
+2. Apply every SQL file in `supabase/migrations/` in filename order (or run `npx supabase db push --linked`).
 3. In **Authentication > Users**, create an email/password user for the administrator.
 4. Edit `supabase/setup-admin.sql`, replace `REPLACE_WITH_ADMIN_EMAIL`, and run it once in the SQL Editor.
 5. Keep public sign-up disabled; the application exposes sign-in only.
@@ -50,6 +51,8 @@ The migration creates and seeds:
 - `admin_users` — the administrator allowlist;
 - `submit_gift_selection(...)` — validated public submission RPC; and
 - `is_admin()` — server-side authorization helper.
+
+Names are normalized for capitalization and repeated spaces before matching. An existing roster record is reused, a previously unlisted employee and their office details are created during submission, and a second gift response for the same employee is rejected atomically by Postgres.
 
 ## Cloudflare Workers deployment
 

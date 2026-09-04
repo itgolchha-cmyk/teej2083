@@ -76,6 +76,7 @@ button:focus-visible, input:focus-visible, select:focus-visible, a:focus-visible
 .field--wide { grid-column: 1/-1; }
 .field label { display: block; color: #4d343c; font-size: 13px; font-weight: 750; margin: 0 0 7px; }
 .field label span { color: var(--maroon); }
+.field-hint { display: block; margin-top: 7px; color: var(--muted); font-size: 12px; line-height: 1.45; }
 .field + .field { margin-top: 0; }
 .login-card .field { margin-bottom: 17px; }
 input, select { width: 100%; min-height: 48px; color: var(--ink); background: #fff; border: 1px solid #d9c8cd; border-radius: 10px; padding: 11px 13px; transition: border-color .15s, box-shadow .15s; }

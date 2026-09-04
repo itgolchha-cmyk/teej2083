@@ -15,7 +15,7 @@
     <div class="company-name" aria-label="Golchha Group">Golchha Group</div>
     <div class="eyebrow">तीज २०८३</div>
     <h1>Choose Your Teej Gift</h1>
-    <p>Select your name, verify your office details, and choose one gift prepared especially for you.</p>
+    <p>Enter your name, verify your office details, and choose one gift prepared especially for you.</p>
   </header>
 
   <main class="page-shell">
@@ -28,31 +28,34 @@
       <section class="form-section">
         <div class="section-title">
           <span class="step">1</span>
-          <div><h2>Your details</h2><p>Choose your name to fill the remaining fields.</p></div>
+          <div><h2>Your details</h2><p>Enter your name. Existing employee details will be filled automatically.</p></div>
         </div>
 
         <div class="form-grid">
           <div class="field field--wide">
             <label for="employee">Employee Name <span aria-hidden="true">*</span></label>
-            <select id="employee" required disabled>
-              <option value="">Loading employee list…</option>
-            </select>
+            <input id="employee" type="text" list="employeeOptions" autocomplete="off" maxlength="150" required disabled aria-describedby="employeeHint" placeholder="Loading employee records…">
+            <datalist id="employeeOptions"></datalist>
+            <small class="field-hint" id="employeeHint">Type your full name. You can enter a new name if it is not listed.</small>
           </div>
           <div class="field">
-            <label for="designation">Designation</label>
-            <input id="designation" type="text" readonly placeholder="—">
+            <label for="designation">Designation <span aria-hidden="true">*</span></label>
+            <input id="designation" type="text" maxlength="150" required readonly placeholder="—">
           </div>
           <div class="field">
-            <label for="unit">Unit</label>
-            <input id="unit" type="text" readonly placeholder="—">
+            <label for="unit">Unit <span aria-hidden="true">*</span></label>
+            <input id="unit" type="text" list="unitOptions" maxlength="150" required readonly placeholder="—">
+            <datalist id="unitOptions"></datalist>
           </div>
           <div class="field">
-            <label for="branch">Branch</label>
-            <input id="branch" type="text" readonly placeholder="—">
+            <label for="branch">Branch <span aria-hidden="true">*</span></label>
+            <input id="branch" type="text" list="branchOptions" maxlength="150" required readonly placeholder="—">
+            <datalist id="branchOptions"></datalist>
           </div>
           <div class="field">
-            <label for="department">Department</label>
-            <input id="department" type="text" readonly placeholder="—">
+            <label for="department">Department <span aria-hidden="true">*</span></label>
+            <input id="department" type="text" list="departmentOptions" maxlength="150" required readonly placeholder="—">
+            <datalist id="departmentOptions"></datalist>
           </div>
         </div>
       </section>

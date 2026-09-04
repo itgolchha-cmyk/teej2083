@@ -4,9 +4,16 @@ import { unzipSync, strFromU8 } from "fflate";
 import { createGiftSelectionsWorkbook } from "../src/xlsx.js";
 
 const migration = await readFile(new URL("../supabase/migrations/20260904000000_teej_gift_schema.sql", import.meta.url), "utf8");
+const manualEntryMigration = await readFile(new URL("../supabase/migrations/20260904020000_manual_employee_entry.sql", import.meta.url), "utf8");
+const formHtml = await readFile(new URL("../index.html", import.meta.url), "utf8");
+const formScript = await readFile(new URL("../src/form.js", import.meta.url), "utf8");
 const staffInsert = migration.match(/insert into public\.staff[\s\S]+?on conflict \(employee_name\)/)?.[0] ?? "";
 const staffRows = staffInsert.match(/^\s*\('[^\n]+\),?$/gm) ?? [];
 assert.equal(staffRows.length, 68, "Migration should contain all 68 staff rows");
+assert.match(formHtml, /<input id="employee"[^>]+list="employeeOptions"[^>]+required/);
+assert.match(formScript, /p_employee_name: employeeName/);
+assert.match(manualEntryMigration, /staff_employee_name_normalized_uidx/);
+assert.match(manualEntryMigration, /when unique_violation/);
 
 const sample = {
   id: "6c5b5e3a-4b4a-48c2-8b31-333333333333",
