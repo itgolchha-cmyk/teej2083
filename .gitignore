@@ -5,6 +5,7 @@ dist/
 !.env.example
 .wrangler/
 supabase/.temp/
+.supabase-auth/
 .DS_Store
 *.log
 teej-2083-gift-form.html
