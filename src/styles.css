@@ -32,9 +32,13 @@ button:focus-visible, input:focus-visible, select:focus-visible, a:focus-visible
 .eyebrow--dark { color: var(--maroon); font: 800 12px/1.2 Inter, sans-serif; letter-spacing: .12em; text-transform: uppercase; }
 
 .public-page {
-  background:
-    radial-gradient(circle at 10% 4%, rgba(225, 188, 102, .18), transparent 23rem),
-    linear-gradient(180deg, var(--maroon) 0 295px, var(--cream) 295px 100%);
+  background-image:
+    linear-gradient(180deg, rgba(91, 8, 31, .54) 0 295px, rgba(255, 250, 242, .96) 295px 100%),
+    url("/assets/teej-background.jpg");
+  background-position: center top, center 30%;
+  background-size: cover, cover;
+  background-repeat: no-repeat;
+  background-attachment: scroll, fixed;
 }
 .hero { position: relative; overflow: hidden; color: #fff; max-width: 1040px; margin: 0 auto; padding: 44px 22px 78px; text-align: center; }
 .hero h1 { margin: 0; font: 600 clamp(36px, 7vw, 58px)/1.05 Georgia, serif; }
@@ -42,6 +46,22 @@ button:focus-visible, input:focus-visible, select:focus-visible, a:focus-visible
 .hero__petal { position: absolute; width: 160px; height: 70px; border: 1px solid rgba(255,255,255,.12); border-radius: 100% 0 100% 0; transform: rotate(-20deg); }
 .hero__petal--one { left: 3%; top: 38px; }
 .hero__petal--two { right: 4%; bottom: 44px; transform: rotate(160deg); }
+.company-name {
+  position: absolute;
+  top: 22px;
+  right: 24px;
+  z-index: 2;
+  padding: 9px 14px;
+  color: #fff;
+  background: rgba(44, 8, 20, .48);
+  border: 1px solid rgba(255,255,255,.3);
+  border-radius: 999px;
+  box-shadow: 0 6px 20px rgba(29, 4, 13, .18);
+  backdrop-filter: blur(8px);
+  font-size: 14px;
+  font-weight: 850;
+  letter-spacing: .045em;
+}
 .page-shell { width: min(940px, calc(100% - 28px)); margin: -45px auto 64px; position: relative; }
 .form-card { overflow: hidden; }
 .form-section { padding: clamp(23px, 5vw, 42px); }
@@ -155,8 +175,15 @@ td:first-child { color: var(--wine); font-weight: 750; white-space: nowrap; }
 .table-footer { display: flex; justify-content: space-between; gap: 15px; padding: 13px 17px; color: var(--muted); background: #faf8f8; font-size: 11px; }
 
 @media (max-width: 760px) {
-  .public-page { background: linear-gradient(180deg,var(--maroon) 0 250px,var(--cream) 250px 100%); }
-  .hero { padding-top: 34px; }
+  .public-page {
+    background-image:
+      linear-gradient(180deg, rgba(91, 8, 31, .58) 0 250px, rgba(255, 250, 242, .97) 250px 100%),
+      url("/assets/teej-background.jpg");
+    background-position: center top, center top;
+    background-size: cover, auto 600px;
+    background-attachment: scroll;
+  }
+  .hero { padding-top: 66px; }
   .page-shell { width: min(100% - 18px,940px); }
   .form-grid, .gift-grid, .spa-grid, .summary-grid { grid-template-columns: 1fr; }
   .field--wide, .summary-item--wide { grid-column: auto; }
@@ -169,6 +196,7 @@ td:first-child { color: var(--wine); font-weight: 750; white-space: nowrap; }
 
 @media (max-width: 440px) {
   .hero__petal { display: none; }
+  .company-name { top: 15px; right: 14px; padding: 7px 11px; font-size: 12px; }
   .admin-bar { align-items: flex-start; }
   .admin-bar .button { min-height: 40px; padding: 8px 12px; }
   .stat-grid { gap: 9px; }
