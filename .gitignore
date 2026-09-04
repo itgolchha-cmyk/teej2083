@@ -4,6 +4,7 @@ dist/
 .env.*
 !.env.example
 .wrangler/
+supabase/.temp/
 .DS_Store
 *.log
 teej-2083-gift-form.html

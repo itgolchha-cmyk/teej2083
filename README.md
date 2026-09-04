@@ -17,6 +17,9 @@ A production-ready employee gift selection app with:
 - **Hosting:** Cloudflare Pages
 - **Source and CI:** GitHub Actions
 
+Repository: <https://github.com/itgolchha-cmyk/teej2083>  
+Cloudflare Pages: <https://teej-2083-gift-selection.pages.dev>
+
 The Supabase publishable/anon key is intentionally used in the browser. Security is enforced in Postgres: public visitors may read the active roster and call only the validated submission function; only authenticated users listed in `admin_users` can read responses.
 
 ## Local development
