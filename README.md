@@ -14,11 +14,11 @@ A production-ready employee gift selection app with:
 
 - **Frontend:** Vite, vanilla JavaScript, and responsive CSS
 - **Backend:** Supabase Postgres, Auth, database functions, and RLS
-- **Hosting:** Cloudflare Pages
-- **Source and CI:** GitHub Actions
+- **Hosting:** Cloudflare Workers with Static Assets
+- **Source and CI:** GitHub with Cloudflare Workers Builds
 
 Repository: <https://github.com/itgolchha-cmyk/teej2083>  
-Cloudflare Pages: <https://teej-2083-gift-selection.pages.dev>
+Cloudflare project: `teej2083`
 
 The Supabase publishable/anon key is intentionally used in the browser. Security is enforced in Postgres: public visitors may read the active roster and call only the validated submission function; only authenticated users listed in `admin_users` can read responses.
 
@@ -51,14 +51,13 @@ The migration creates and seeds:
 - `submit_gift_selection(...)` — validated public submission RPC; and
 - `is_admin()` — server-side authorization helper.
 
-## Cloudflare Pages deployment
+## Cloudflare Workers deployment
 
-The included `wrangler.jsonc` deploys the Vite `dist` directory. For a direct deployment:
+The included `wrangler.jsonc` runs the Vite build and deploys the `dist` directory as Worker Static Assets. For a direct deployment:
 
 ```sh
-npm run build
 npx wrangler login
-npx wrangler pages deploy dist --project-name teej-2083-gift-selection
+npm run deploy
 ```
 
 Set these variables in the Cloudflare Pages project before building from Git:
@@ -66,16 +65,15 @@ Set these variables in the Cloudflare Pages project before building from Git:
 - `VITE_SUPABASE_URL`
 - `VITE_SUPABASE_ANON_KEY`
 
-## GitHub continuous deployment
+## GitHub and Cloudflare continuous deployment
 
-Create a GitHub repository, push the `main` branch, and add these repository Actions secrets:
+Connect the GitHub repository to the `teej2083` Worker using Cloudflare Workers Builds. Use:
 
-- `VITE_SUPABASE_URL`
-- `VITE_SUPABASE_ANON_KEY`
-- `CLOUDFLARE_API_TOKEN`
-- `CLOUDFLARE_ACCOUNT_ID`
+- Build command: optional (`wrangler.jsonc` runs `npm run build` before deployment)
+- Deploy command: `npx wrangler deploy`
+- Production branch: `main`
 
-Every push to `main` runs `.github/workflows/deploy-cloudflare.yml` and publishes the built site to Cloudflare Pages.
+Add `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` as Cloudflare build variables. Every push to `main` is then built and deployed by Cloudflare. GitHub Actions independently validates the production build and Excel artifact tests.
 
 ## Admin Excel export
 

@@ -1,7 +1,13 @@
 {
   "$schema": "./node_modules/wrangler/config-schema.json",
-  "name": "teej-2083-gift-selection",
-  "pages_build_output_dir": "./dist",
+  "name": "teej2083",
   "compatibility_date": "2026-09-04",
+  "assets": {
+    "directory": "./dist",
+    "html_handling": "auto-trailing-slash"
+  },
+  "build": {
+    "command": "npm run build"
+  },
   "send_metrics": false
 }
